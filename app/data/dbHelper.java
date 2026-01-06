@@ -15,20 +15,54 @@ public class dbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(StockContract.StockEntry.CREATE_TABLE_STOCK);
+        db.execSQL(StockFactory.StockEntry.CREATE_TABLE_STOCK);
     }
  
     
     public void insertItem(StockItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues value = new ContentValues();
-        value.put(StockContract.StockEntry.COLUMN_NAME, item.getProductName());
-        value.put(StockContract.StockEntry.COLUMN_PRICE, item.getPrice());
-        value.put(StockContract.StockEntry.COLUMN_QUANTITY, item.getQuantity());
-        value.put(StockContract.StockEntry.COLUMN_SUPPLIER_NAME, item.getSupplierName());
-        value.put(StockContract.StockEntry.COLUMN_SUPPLIER_PHONE, item.getSupplierPhone());
-        value.put(StockContract.StockEntry.COLUMN_SUPPLIER_EMAIL, item.getSupplierEmail());
-        value.put(StockContract.StockEntry.COLUMN_IMAGE, item.getImage());
-        long id = db.insert(StockContract.StockEntry.TABLE_NAME, null, value);
+        value.put(StockFactory.StockEntry.NAME, item.getProductName());
+        value.put(StockFactory.StockEntry.PRICE, item.getPrice());
+        value.put(StockFactory.StockEntry.QUANTITY, item.getQuantity());
+        value.put(StockFactory.StockEntry.SUPPLIER_NAME, item.getSupplierName());
+        value.put(StockFactory.StockEntry.SUPPLIER_PHONE, item.getSupplierPhone());
+        value.put(StockFactory.StockEntry.SUPPLIER_EMAIL, item.getSupplierEmail());
+        value.put(StockFactory.StockEntry.IMAGE, item.getImage());
+        long id = db.insert(StockFactory.StockEntry.TABLE_NAME, null, value);
+    }
+
+        public Cursor readFactory() {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                StockFactory.StockEntry._ID,
+                StockFactory.StockEntry.NAME,
+                StockFactory.StockEntry.PRICE,
+                StockFactory.StockEntry.QUANTITY,
+                StockFactory.StockEntry.SUPPLIER_NAME,
+                StockFactory.StockEntry.SUPPLIER_PHONE,
+                StockFactory.StockEntry.SUPPLIER_EMAIL,
+                StockFactory.StockEntry.IMAGE
+        };
+        Cursor cursor = db.query(
+                StockFactory.StockEntry.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+        return cursor;
+    }
+
+      public void updateItem(long currentItemId, int quantity) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues value = new ContentValues();
+        value.put(StockFactory.StockEntry.QUANTITY, quantity);
+        String selection = StockFactory.StockEntry._ID + "=?";
+        String[] selectionArgs = new String[] { String.valueOf(currentItemId) };
+        db.update(StockFactory.StockEntry.TABLE_NAME,
+                value, selection, selectionArgs);
     }
 }

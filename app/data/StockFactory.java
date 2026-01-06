@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
  */
 public class StockFactory {
 
-    public StockContract() {
+    public StockFactory() {
     }
 
     public static final class StockEntry implements BaseColumns {
@@ -23,13 +23,13 @@ public class StockFactory {
 
         public static final String CREATE_TABLE_STOCK = "CREATE TABLE " +
                 StockFactory.StockEntry.TABLE_NAME + "(" +
-                StockFactory.StockEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                StockFactory.StockEntry.NAME + " TEXT NOT NULL," +
-                StockFactory.StockEntry.PRICE + " TEXT NOT NULL," +
-                StockFactory.StockEntry.QUANTITY + " INTEGER NOT NULL DEFAULT 0," +
-                StockFactory.StockEntry.SUPPLIER_NAME + " TEXT NOT NULL," +
-                StockFactory.StockEntry.SUPPLIER_PHONE + " TEXT NOT NULL," +
-                StockFactory.StockEntry.SUPPLIER_EMAIL + " TEXT NOT NULL," +
-                StockEntry.IMAGE + " TEXT NOT NULL" + ");";
+                StockFactory.StockEntry._ID + " INTEGER PRIMARY KEY," +
+                StockFactory.StockEntry.NAME + " TEXT (NO NULL)," +
+                StockFactory.StockEntry.PRICE + " TEXT (NO NULL)," +
+                StockFactory.StockEntry.QUANTITY + " INTEGER (NO NULL) DEFAULT 0," +
+                StockFactory.StockEntry.SUPPLIER_NAME + " TEXT (NO NULL)," +
+                StockFactory.StockEntry.SUPPLIER_PHONE + " TEXT (NO NULL)," +
+                StockFactory.StockEntry.SUPPLIER_EMAIL + " TEXT (NO NULL)," +
+                StockEntry.IMAGE + " TEXT (NO NULL)" + ");";
     }
 }
