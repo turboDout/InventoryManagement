@@ -1,8 +1,5 @@
 import android.provider.BaseColumns;
 
-/**
- * Created by lara on 2/10/16.
- */
 public class StockFactory {
 
     public StockFactory() {

@@ -56,12 +56,53 @@ public class dbHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor readItem(long itemId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] projection = {
+                StockFactory.StockEntry._ID,
+                StockFactory.StockEntry.NAME,
+                StockFactory.StockEntry.PRICE,
+                StockFactory.StockEntry.QUANTITY,
+                StockFactory.StockEntry.SUPPLIER_NAME,
+                StockFactory.StockEntry.SUPPLIER_PHONE,
+                StockFactory.StockEntry.SUPPLIER_EMAIL,
+                StockFactory.StockEntry.IMAGE
+        };
+        String selection = StockFactory.StockEntry._ID + "=?";
+        String[] selectionArgs = new String[] { String.valueOf(itemId) };
+
+        Cursor cursor = db.query(
+                StockFactory.StockEntry.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        return cursor;
+    }
+
       public void updateItem(long currentItemId, int quantity) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues value = new ContentValues();
         value.put(StockFactory.StockEntry.QUANTITY, quantity);
         String selection = StockFactory.StockEntry._ID + "=?";
         String[] selectionArgs = new String[] { String.valueOf(currentItemId) };
+        db.update(StockFactory.StockEntry.TABLE_NAME,
+                value, selection, selectionArgs);
+    }
+
+     public void sellAItem(long itemId, int quantity) {
+        SQLiteDatabase db = getWritableDatabase();
+        int newQuantity = 0;
+        if (quantity > 0) {
+            newQuantity = quantity -1;
+        }
+        ContentValues value = new ContentValues();
+        values.put(StockFactory.StockEntry.QUANTITY, newQuantity);
+        String selection = StockFactory.StockEntry._ID + "=?";
+        String[] selectionArgs = new String[] { String.valueOf(itemId) };
         db.update(StockFactory.StockEntry.TABLE_NAME,
                 value, selection, selectionArgs);
     }
