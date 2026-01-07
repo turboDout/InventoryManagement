@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.inventorymanagement"
+    namespace = "com.example.inventorymanage"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.example.inventorymanagement"
+        applicationId = "com.example.inventorymanage"
         minSdk = 24
         targetSdk = 36
         versionCode = 1

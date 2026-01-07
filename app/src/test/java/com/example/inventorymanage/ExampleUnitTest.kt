@@ -1,4 +1,4 @@
-package com.example.inventorymanagement
+package com.example.inventorymanage
 
 import org.junit.Test
 

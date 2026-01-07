@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "InventoryManagement"
+rootProject.name = "InventoryManage"
 include(":app")

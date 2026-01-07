@@ -1,4 +1,4 @@
-package com.example.inventorymanagement.ui.theme
+package com.example.inventorymanage.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
