@@ -5,14 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="63275a72-a136-4529-bffe-e7161bc21eeb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/DetailsActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/PrimaryAct.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/PrimaryAct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/StockCursorAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/StockCursorAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/StockFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/StockFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/StockItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/StockItem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/dbHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/data/dbHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/DetailsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/inventorymanage/DetailsActivity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

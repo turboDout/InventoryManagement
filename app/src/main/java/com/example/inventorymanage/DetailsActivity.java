@@ -95,7 +95,72 @@ public class DetailsActivity extends AppCompatActivity {
                 itemHasChanged = true;
             }
         });
+
+        imageBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openImageSelect();
+                itemHasChanged = true;
+            }
+        });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        return true;
+    }
+    @Override //DISCARD AND CLOSE ACTIVITY
+    public void onBackPressed() {
+        if (!ItemHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                };
+        // Show dialog that there are unsaved changes
+        showUnsavedChanges(discardButtonListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        return true;
+    }
+
+    private void showUnsavedChanges(
+            DialogInterface.OnClickListener discardButtonListener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.unsaved_changes_msg);
+        builder.setPositiveButton(R.string.discard, discardButtonListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    private void openImageSelect() {
+        Intent intent;
+        if(Build.VERSION.SDK_INT < 19) {
+            intent = new Intent(Intent.ACTION_GET_CONTENT);
+        } else {
+            intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+        }
+        intent.setType("image/*");
+        startActivity(Intent.createChooser(intent, "Select a picture"),PICK_IMAGE_REQUEST);
+    }
+
+
 
     private void addOneToAmount() {
         String previousValueS = amountEdit.getText().toString();
@@ -134,5 +199,50 @@ public class DetailsActivity extends AppCompatActivity {
         factoryPhoneEdit.setEnabled(false);
         factoryEmailEdit.setEnabled(false);
         imageBtn.setEnabled(false);
+    }
+
+    private boolean addItems() {
+        boolean isGood = true;
+        if (!checkIfValueSet(nameEdit, "name")) {
+            isGood = false;
+        }
+        if (!checkIfValueSet(priceEdit, "price")) {
+            isGood= false;
+        }
+        if (!checkIfValueSet(amountEdit, "amount")) {
+            isGood = false;
+        }
+        if (!checkIfValueSet(factoryNameEdit, "factory name")) {
+            isGood = false;
+        }
+        if (!checkIfValueSet(factoryPhoneEdit, "factory phone")) {
+            isGood = false;
+        }
+        if (!checkIfValueSet(factoryEmailEdit, "factory email")) {
+            isGood = false;
+        }
+        if (actualUri == null && itemId == 0) {
+            isGood = false;
+            imageBtn.setError("Missing image");
+        }
+        if (!isGood) {
+            return false;
+        }
+
+        if (itemId == 0) {
+            StockItem item = new StockItem(
+                    nameEdit.getText().toString().trim(),
+                    priceEdit.getText().toString().trim(),
+                    Integer.parseInt(amountEdit.getText().toString().trim()),
+                    factoryNameEdit.getText().toString().trim(),
+                    factoryPhoneEdit.getText().toString().trim(),
+                    factoryEmailEdit.getText().toString().trim(),
+                    actualUri.toString());
+            DbHelper.insertItem(item);
+        } else {
+            int quantity = Integer.parseInt(amountEdit.getText().toString().trim());
+            DbHelper.updateItem(itemId, amount);
+        }
+        return true;
     }
 }
