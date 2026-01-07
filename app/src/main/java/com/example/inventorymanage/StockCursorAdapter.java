@@ -1,17 +1,14 @@
-import android.content.Context;
+package com.example.inventorymanage;
+
 import android.database.Cursor;
-import android.view.View;
-import android.view.ViewGroup;
-import android.net.Uri;
-import android.view.LayoutInflater;
 import android.widget.CursorAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
+
+//do work here
 public class StockCursorAdapter extends CursorAdapter {
-    private final Activity activity;
+    private final MainActivity activity;
 
-    public StockCursorAdapter(Activity context, Cursor c) {
+    public StockCursorAdapter(MainActivity context, Cursor c) {
         super(context, c, 0);
         this.activity = context;
     }

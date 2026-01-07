@@ -1,3 +1,5 @@
+package com.example.inventorymanage.data;
+
 public class StockItem {
 
     private final String productName;

@@ -1,3 +1,6 @@
+
+package com.example.inventorymanage.data;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;

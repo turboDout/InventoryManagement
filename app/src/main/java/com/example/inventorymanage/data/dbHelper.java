@@ -1,3 +1,5 @@
+package com.example.inventorymanage.data;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +19,11 @@ public class dbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(StockFactory.StockEntry.CREATE_TABLE_STOCK);
     }
- 
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+    }
     
     public void insertItem(StockItem item) {
         SQLiteDatabase db = this.getWritableDatabase();
