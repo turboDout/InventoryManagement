@@ -1,22 +1,26 @@
 package com.example.inventorymanage;
-import com.example.inventorymanage.data;
+import com.example.inventorymanage.data.StockFactory;
 import com.example.inventorymanage.data.dbHelper;
+import com.example.inventorymanage.StockCursorAdapter;
+import com.example.inventorymanage.data.StockItem;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import androidx.activity.ComponentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +30,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends ComponentActivity {
     private dbHelper Dbhelper;
+    private Context c;
     private static final String LOG = DetailsActivity.class.getCanonicalName();
     private static final int REQUEST_READ_STORAGE = 1;
 
@@ -50,7 +55,9 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle instanceState) {
         super.onCreate(instanceState);
         setContentView(R.layout.activity_details);
-        if (getSupportActionBar() != null) {
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             getSupportActionBar().setHomeAsEnabled(true);
         }
 
@@ -68,7 +75,7 @@ public class DetailsActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.image_view);
 
 
-        Dbhelper = new dbHelper(this);
+        Dbhelper = new dbHelper(c);
         itemId = getIntent().getLongExtra("itemId", 0);
 
 
@@ -159,7 +166,17 @@ public class DetailsActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivity(Intent.createChooser(intent, "Select a picture"),PICK_IMAGE_REQUEST);
     }
-
+    public void tryToOpenImageSelector() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+            return;
+        }
+        openImageSelect();
+    }
 
 
     private void addOneToAmount() {
@@ -183,12 +200,13 @@ public class DetailsActivity extends AppCompatActivity {
                 quantityEdit.setText(String.valueOf(previousValue - 1));
             }
         }
+    @SuppressLint("Range")
     private void addValuesToEditItem(long itemId) {
         Cursor cursor = DbHelper.readItem(itemId);
         cursor.moveToFirst();
         nameEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.NAME)));
         priceEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.PRICE)));
-        amountEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.Amount)));
+        amountEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.AMOUNT)));
         factoryNameEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.FACTORY_NAME)));
         factoryPhoneEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.FACTORY_PHONE)));
         factoryEmailEdit.setText(cursor.getString(cursor.getColumnIndex(StockFactory.StockEntry.FACTORY_EMAIL)));
@@ -244,5 +262,36 @@ public class DetailsActivity extends AppCompatActivity {
             DbHelper.updateItem(itemId, amount);
         }
         return true;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] results) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                // If request is cancelled, the result arrays are empty.
+                if (results.length > 0
+                        && results[0] == PackageManager.PERMISSION_GRANTED) {
+                    openImageSelect();
+                    // permission was granted
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int result, Intent data){
+        //check that the request code matches the proper intent
+
+        if(requestCode == IMAGE_REQUEST && result == Activity.RESULT_OK) {
+            //uri to the document will be contained in the return intent and provided
+            //to this method as a parameter. pull that uri using resultData.getData()
+
+            if(data != null) {
+                actualUri = data.getData();
+                imageView.setImageURI(actualUri);
+                imageView.invalidate();
+            }
+        }
     }
 }

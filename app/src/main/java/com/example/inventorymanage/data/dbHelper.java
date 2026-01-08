@@ -30,10 +30,10 @@ public class dbHelper extends SQLiteOpenHelper {
         ContentValues value = new ContentValues();
         value.put(StockFactory.StockEntry.NAME, item.getProductName());
         value.put(StockFactory.StockEntry.PRICE, item.getPrice());
-        value.put(StockFactory.StockEntry.QUANTITY, item.getQuantity());
-        value.put(StockFactory.StockEntry.SUPPLIER_NAME, item.getSupplierName());
-        value.put(StockFactory.StockEntry.SUPPLIER_PHONE, item.getSupplierPhone());
-        value.put(StockFactory.StockEntry.SUPPLIER_EMAIL, item.getSupplierEmail());
+        value.put(StockFactory.StockEntry.AMOUNT, item.getAmount());
+        value.put(StockFactory.StockEntry.FACTORY_NAME, item.getFactoryName());
+        value.put(StockFactory.StockEntry.FACTORY_PHONE, item.getFactoryPhone());
+        value.put(StockFactory.StockEntry.FACTORY_EMAIL, item.getFactoryEmail());
         value.put(StockFactory.StockEntry.IMAGE, item.getImage());
         long id = db.insert(StockFactory.StockEntry.TABLE_NAME, null, value);
     }
@@ -44,10 +44,10 @@ public class dbHelper extends SQLiteOpenHelper {
                 StockFactory.StockEntry._ID,
                 StockFactory.StockEntry.NAME,
                 StockFactory.StockEntry.PRICE,
-                StockFactory.StockEntry.QUANTITY,
-                StockFactory.StockEntry.SUPPLIER_NAME,
-                StockFactory.StockEntry.SUPPLIER_PHONE,
-                StockFactory.StockEntry.SUPPLIER_EMAIL,
+                StockFactory.StockEntry.AMOUNT,
+                StockFactory.StockEntry.FACTORY_NAME,
+                StockFactory.StockEntry.FACTORY_PHONE,
+                StockFactory.StockEntry.FACTORY_EMAIL,
                 StockFactory.StockEntry.IMAGE
         };
         Cursor cursor = db.query(
@@ -68,10 +68,10 @@ public class dbHelper extends SQLiteOpenHelper {
                 StockFactory.StockEntry._ID,
                 StockFactory.StockEntry.NAME,
                 StockFactory.StockEntry.PRICE,
-                StockFactory.StockEntry.QUANTITY,
-                StockFactory.StockEntry.SUPPLIER_NAME,
-                StockFactory.StockEntry.SUPPLIER_PHONE,
-                StockFactory.StockEntry.SUPPLIER_EMAIL,
+                StockFactory.StockEntry.AMOUNT,
+                StockFactory.StockEntry.FACTORY_NAME,
+                StockFactory.StockEntry.FACTORY_PHONE,
+                StockFactory.StockEntry.FACTORY_EMAIL,
                 StockFactory.StockEntry.IMAGE
         };
         String selection = StockFactory.StockEntry._ID + "=?";
@@ -92,7 +92,7 @@ public class dbHelper extends SQLiteOpenHelper {
       public void updateItem(long currentItemId, int quantity) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues value = new ContentValues();
-        value.put(StockFactory.StockEntry.QUANTITY, quantity);
+        value.put(StockFactory.StockEntry.AMOUNT, quantity);
         String selection = StockFactory.StockEntry._ID + "=?";
         String[] selectionArgs = new String[] { String.valueOf(currentItemId) };
         db.update(StockFactory.StockEntry.TABLE_NAME,
@@ -106,7 +106,7 @@ public class dbHelper extends SQLiteOpenHelper {
             newQuantity = quantity -1;
         }
         ContentValues value = new ContentValues();
-        values.put(StockFactory.StockEntry.QUANTITY, newQuantity);
+        value.put(StockFactory.StockEntry.AMOUNT, newQuantity);
         String selection = StockFactory.StockEntry._ID + "=?";
         String[] selectionArgs = new String[] { String.valueOf(itemId) };
         db.update(StockFactory.StockEntry.TABLE_NAME,

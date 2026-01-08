@@ -1,12 +1,26 @@
 package com.example.inventorymanage;
 
-import com.example.inventorymanage.data;
+import com.example.inventorymanage.DetailsActivity;
+import com.example.inventorymanage.data.StockFactory;
+import com.example.inventorymanage.StockCursorAdapter;
+import com.example.inventorymanage.data.StockItem;
+import com.example.inventorymanage.data.dbHelper;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import androidx.activity.ComponentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,12 +28,13 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ComponentActivity {
 
     private final static String LOG = MainActivity.class.getCanonicalName();
     dbHelper DbHelper;
     StockCursorAdapter adapter;
     int lastItem = 0;
+    private Context c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                Intent intent = new Intent(c, DetailsActivity.class);
                 startActivity(intent);
             }
         });
@@ -71,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickOnViewItem(long id) {
-        Intent intent = new Intent(this, DetailsActivity.class);
+        Intent intent = new Intent(c, DetailsActivity.class);
         intent.putExtra("itemId", id);
         startActivity(intent);
     }

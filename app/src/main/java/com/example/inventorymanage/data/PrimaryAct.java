@@ -1,23 +1,35 @@
 
 package com.example.inventorymanage.data;
 
+
+import com.example.inventorymanage.StockCursorAdapter;
+import com.example.inventorymanage.data.StockItem;
+import com.example.inventorymanage.data.StockFactory;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-import android.widget.AbsListView;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import androidx.activity.ComponentActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
 
-import InventoryManagement.data.dbHelper;
-import InventoryManagement.data.StockCursorAdapter;
 
-public class PrimaryAct extends  AppCompatActivity  {
+import com.example.inventorymanage.data.dbHelper;
+import com.example.inventorymanage.data.StockItem;
+import com.example.inventorymanage.data.StockFactory;
+
+public class PrimaryAct extends  ComponentActivity  {
     private final static String LOG = PrimaryAct.class.getCanonicalName();
-    dbHelper _dbHelper;
+    dbHelper DbHelper;
     StockCursorAdapter adapter;
     int lastItem = 0;
 
@@ -25,7 +37,7 @@ public class PrimaryAct extends  AppCompatActivity  {
     protected void onCreate(Bundle instanceState) {
         super.onCreate(instanceState);
         setContentView(R.layout.activity_main);
-        _dbHelper = new dbHelper(this);
+        DbHelper = new dbHelper(this);
 
     } 
 
@@ -39,7 +51,7 @@ public class PrimaryAct extends  AppCompatActivity  {
         "Nestle@nestle.com"
         // picture goes here ""
     );
-    dbHelper.insertItem(chocolates);
+    DbHelper.insertItem(chocolates);
 
   }
 }

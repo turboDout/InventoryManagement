@@ -4,19 +4,19 @@ public class StockItem {
 
     private final String productName;
     private final String price;
-    private final int quantity;
-    private final String supplierName;
-    private final String supplierPhone;
-    private final String supplierEmail;
+    private final int amount;
+    private final String factoryName;
+    private final String factoryPhone;
+    private final String factoryEmail;
     private final String image;
 
-    public StockItem(String productName, String price, int quantity, String supplierName, String supplierPhone, String supplierEmail, String image) {
+    public StockItem(String productName, String price, int amount, String factoryName, String factoryPhone, String factoryEmail, String image) {
         this.productName = productName;
         this.price = price;
-        this.quantity = quantity;
-        this.supplierName = supplierName;
-        this.supplierPhone = supplierPhone;
-        this.supplierEmail = supplierEmail;
+        this.amount = amount;
+        this.factoryName = factoryName;
+        this.factoryPhone = factoryPhone;
+        this.factoryEmail = factoryEmail;
         this.image = image;
     }
 
@@ -28,20 +28,20 @@ public class StockItem {
         return price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAmount() {
+        return amount;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getFactoryName() {
+        return factoryName;
     }
 
-    public String getSupplierPhone() {
-        return supplierPhone;
+    public String getFactoryPhone() {
+        return factoryPhone;
     }
 
-    public String getSupplierEmail() {
-        return supplierEmail;
+    public String getFactoryEmail() {
+        return factoryEmail;
     }
 
     public String getImage() {
@@ -52,10 +52,10 @@ public class StockItem {
         return "Item: " +
                 "productName='" + productName + '|' +
                 ", price='" + price + '|' +
-                ", quantity=" + quantity +
-                ", supplierName='" + supplierName + '|' +
-                ", supplierPhone='" + supplierPhone + '|' +
-                ", supplierEmail='" + supplierEmail + '|';
+                ", quantity=" + amount +
+                ", supplierName='" + factoryName + '|' +
+                ", supplierPhone='" + factoryPhone + '|' +
+                ", supplierEmail='" + factoryEmail + '|';
     }
 
 }

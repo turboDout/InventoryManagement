@@ -2,6 +2,7 @@ package com.example.inventorymanage.data;
 
 import android.provider.BaseColumns;
 
+
 public class StockFactory {
 
     public StockFactory() {
