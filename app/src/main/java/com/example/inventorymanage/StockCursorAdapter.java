@@ -21,7 +21,7 @@ public class StockCursorAdapter extends CursorAdapter {
     private final MainActivity activity;
     public StockCursorAdapter(Context c, Cursor cursor) {
         super(c, cursor, 0);
-        this.activity = context;
+        this.activity = c;
     }
      @Override
      public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {

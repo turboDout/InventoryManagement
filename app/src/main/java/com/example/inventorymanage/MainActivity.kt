@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.ComponentActivity;
+import android.app.ActionBar;
 import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
 import android.view.Menu;
@@ -26,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends ComponentActivity {
@@ -55,21 +57,21 @@ public class MainActivity extends ComponentActivity {
         View emptyView = findViewById(R.id.empty_view);
         listView.setEmptyView(emptyView);
 
-        Cursor cursor = DbHelper.readStock();
+        Cursor cursor = DbHelper.readFactory();
 
         adapter = new StockCursorAdapter(this, cursor);
         listView.setAdapter(adapter);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if(scrollState == 0) return;
+                if (scrollState == 0) return;
                 final int currentFirstVisibleItem = view.getFirstVisiblePosition();
-                if (currentFirstVisibleItem > lastVisibleItem) {
+                if (currentFirstVisibleItem > lastItem) {
                     fab.show();
-                } else if (currentFirstVisibleItem < lastVisibleItem) {
+                } else if (currentFirstVisibleItem < lastItem) {
                     fab.hide();
                 }
-                lastVisibleItem = currentFirstVisibleItem;
+                lastItem = currentFirstVisibleItem;
             }
 
             @Override
@@ -82,7 +84,7 @@ public class MainActivity extends ComponentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.swapCursor(dbHelper.readStock());
+        adapter.swapCursor(dbHelper.readFactory());
     }
 
     public void clickOnViewItem(long id) {
@@ -92,8 +94,8 @@ public class MainActivity extends ComponentActivity {
     }
 
     public void clickOnSale(long id, int quantity) {
-        DbHelper.sellOneItem(id, quantity);
-        adapter.swapCursor(dbHelper.readStock());
+        DbHelper.sellAItem(id, quantity);
+        adapter.swapCursor(dbHelper.readFactory());
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MainActivity extends ComponentActivity {
             case R.id.action_add_dummy_data:
                 // add dummy data for testing
                 addDummyData();
-                adapter.swapCursor(DbHelper.readStock());
+                adapter.swapCursor(DbHelper.readFactory());
         }
         return super.onOptionsItemSelected(item);
     }
@@ -186,4 +188,5 @@ public class MainActivity extends ComponentActivity {
                 "customer@chipscompany.com",
                 "android.resource://com.example.inventorymanage/drawable/chips");
         DbHelper.insertItem(chips);
+    }
 }

@@ -17,9 +17,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.ComponentActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
-import android.app.ActionBar;
+
 import android.app.Activity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -29,9 +31,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class DetailsActivity extends ComponentActivity {
-    private dbHelper Dbhelper;
+public class DetailsActivity extends  AppCompatActivity {
+    private dbHelper DbHelper;
     private Context c;
     private static final String LOG = DetailsActivity.class.getCanonicalName();
     private static final int REQUEST_READ_STORAGE = 1;
@@ -48,7 +51,7 @@ public class DetailsActivity extends ComponentActivity {
     Button imageBtn;
     ImageView imageView;
     Uri actualUri;
-    Boolean ItemHasChanged = false;
+    Boolean itemHasChanged = false;
     private static final int IMAGE_REQUEST = 0;
 
     @Override
@@ -57,9 +60,9 @@ public class DetailsActivity extends ComponentActivity {
         setContentView(R.layout.activity_details);
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            getSupportActionBar().setHomeAsEnabled(true);
-        }
+//        if (actionBar != null) {
+//            getSupportActionBar().setHomeAsEnabled(true);
+//        }
 
 
         //perform edits
@@ -80,7 +83,7 @@ public class DetailsActivity extends ComponentActivity {
 
 
         if (itemId == 0) {
-            setTitle(getString(R.string.ediot_activity_title_new_item));
+            setTitle(getString(R.string.edit_activity_title_new_item));
         } else {
             setTitle(getString(R.string.editor_activity_title_edit_item));
             addValuesToEditItem(itemId);
@@ -177,7 +180,15 @@ public class DetailsActivity extends ComponentActivity {
         }
         openImageSelect();
     }
-
+    private boolean checkIfValueSet(EditText text, String description) {
+        if (TextUtils.isEmpty(text.getText())) {
+            text.setError("Missing product " + description);
+            return false;
+        } else {
+            text.setError(null);
+            return true;
+        }
+    }
 
     private void addOneToAmount() {
         String previousValueS = amountEdit.getText().toString();
@@ -185,7 +196,7 @@ public class DetailsActivity extends ComponentActivity {
         if (previousValueS.isEmpty()) {
             previousValue = 0;
         } else {
-            previousValue = Intenger.parseInt(previousValueS);
+            previousValue = Integer.parseInt(previousValueS);
         }
     }
         private void subtractOneFromAmount() {
@@ -196,7 +207,7 @@ public class DetailsActivity extends ComponentActivity {
             } else if (previousValueS.equals("0")) {
                 return;
             } else {
-                previousValue = Intenger.parseInt(previousValueS);
+                previousValue = Integer.parseInt(previousValueS);
                 quantityEdit.setText(String.valueOf(previousValue - 1));
             }
         }
