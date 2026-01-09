@@ -5,6 +5,7 @@ import com.example.inventorymanage.data.StockFactory;
 import com.example.inventorymanage.StockCursorAdapter;
 import com.example.inventorymanage.data.StockItem;
 import com.example.inventorymanage.data.dbHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -30,6 +31,7 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+
 public class MainActivity extends ComponentActivity {
 
     private final static String LOG = MainActivity.class.getCanonicalName();
@@ -44,7 +46,7 @@ public class MainActivity extends ComponentActivity {
         setContentView(R.layout.activity_main);
         DbHelper = new dbHelper(this);
 
-        final ActionButton fab = (ActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +86,7 @@ public class MainActivity extends ComponentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.swapCursor(dbHelper.readFactory());
+        adapter.swapCursor(DbHelper.readFactory());
     }
 
     public void clickOnViewItem(long id) {
@@ -95,7 +97,7 @@ public class MainActivity extends ComponentActivity {
 
     public void clickOnSale(long id, int quantity) {
         DbHelper.sellAItem(id, quantity);
-        adapter.swapCursor(dbHelper.readFactory());
+        adapter.swapCursor(DbHelper.readFactory());
     }
 
     @Override

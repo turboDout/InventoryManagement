@@ -72,8 +72,8 @@ public class DetailsActivity extends  AppCompatActivity {
         factoryNameEdit = (EditText) findViewById(R.id.factory_name_edit);
         factoryPhoneEdit = (EditText) findViewById(R.id.factory_phone_edit);
         factoryEmailEdit = (EditText) findViewById(R.id.factory_email_edit);
-        decreaseAmountEdit = (ImageButton) findViewById(R.id.decrease_amount);
-        increaseAmountEdit = (ImageButton) findViewById(R.id.increase_amount);
+        decreaseAmount = (ImageButton) findViewById(R.id.decrease_amount);
+        increaseAmount = (ImageButton) findViewById(R.id.increase_amount);
         imageBtn = (Button) findViewById(R.id.select_image);
         imageView = (ImageView) findViewById(R.id.image_view);
 
@@ -122,7 +122,7 @@ public class DetailsActivity extends  AppCompatActivity {
     }
     @Override //DISCARD AND CLOSE ACTIVITY
     public void onBackPressed() {
-        if (!ItemHasChanged) {
+        if (!itemHasChanged) {
             super.onBackPressed();
             return;
         }
@@ -167,7 +167,7 @@ public class DetailsActivity extends  AppCompatActivity {
             intent.addCategory(Intent.CATEGORY_OPENABLE);
         }
         intent.setType("image/*");
-        startActivity(Intent.createChooser(intent, "Select a picture"),PICK_IMAGE_REQUEST);
+        startActivity(Intent.createChooser(intent, "Select a picture"));
     }
     public void tryToOpenImageSelector() {
         if (ContextCompat.checkSelfPermission(this,
@@ -175,7 +175,7 @@ public class DetailsActivity extends  AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    REQUEST_READ_STORAGE);
             return;
         }
         openImageSelect();
@@ -208,7 +208,7 @@ public class DetailsActivity extends  AppCompatActivity {
                 return;
             } else {
                 previousValue = Integer.parseInt(previousValueS);
-                quantityEdit.setText(String.valueOf(previousValue - 1));
+                amountEdit.setText(String.valueOf(previousValue - 1));
             }
         }
     @SuppressLint("Range")
@@ -269,26 +269,12 @@ public class DetailsActivity extends  AppCompatActivity {
                     actualUri.toString());
             DbHelper.insertItem(item);
         } else {
-            int quantity = Integer.parseInt(amountEdit.getText().toString().trim());
+            int amount = Integer.parseInt(amountEdit.getText().toString().trim());
             DbHelper.updateItem(itemId, amount);
         }
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] results) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (results.length > 0
-                        && results[0] == PackageManager.PERMISSION_GRANTED) {
-                    openImageSelect();
-                    // permission was granted
-                }
-            }
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int result, Intent data){
