@@ -32,8 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 
-public class MainActivity extends ComponentActivity {
-
+public class MainActivity extends AppCompatActivity {
     private final static String LOG = MainActivity.class.getCanonicalName();
     dbHelper DbHelper;
     StockCursorAdapter adapter;
@@ -117,9 +116,9 @@ public class MainActivity extends ComponentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Add data for demo purposes
-     */
+    //
+     // Add data for demo purposes
+     //
     private void addDummyData() {
         StockItem chocolates = new StockItem(
                 "Chocolates",

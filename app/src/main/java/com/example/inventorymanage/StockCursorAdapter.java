@@ -16,12 +16,13 @@ import android.widget.TextView;
 
 
 
-//do work here
+
 public class StockCursorAdapter extends CursorAdapter {
-    private final MainActivity activity;
+    private final Context context;
+
     public StockCursorAdapter(Context c, Cursor cursor) {
         super(c, cursor, 0);
-        this.activity = c;
+        this.context = c;
     }
      @Override
      public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
